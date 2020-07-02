@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     
     public float deathZone = 50.0f;
     public Vector3 respawnLocation = new Vector3(0, 3, 0);
+    public float RaycastLength = 1;
 
     private Rigidbody playerRb;
     private Transform myTransform;
@@ -26,7 +27,7 @@ public class PlayerController : MonoBehaviour
         
         deathCount = 0;
     }
-
+    
     private void DoPlayerInput() {
         Vector3 moveDirection = Vector3.zero;
         
@@ -52,7 +53,10 @@ public class PlayerController : MonoBehaviour
             playerRb.AddForce(0, jumpForce, 0, ForceMode.Impulse);
         }
 
-        myTransform.Translate(moveDirection * speed * Time.deltaTime);
+        if(!Physics.Raycast(myTransform.position, moveDirection, RaycastLength))
+        {
+            myTransform.Translate(moveDirection * speed * Time.deltaTime);
+        }
     }
     
     private void CheckDeath() {
