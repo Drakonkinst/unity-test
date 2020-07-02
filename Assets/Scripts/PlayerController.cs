@@ -16,33 +16,36 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerRb = gameObject.GetComponent<Rigidbody>();
+        playerRb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        Vector3 moveDirection = Vector3.zero;
+        
         if(Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
-            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+            moveDirection += Vector3.forward;
         }
-        else if(Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+        if(Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         {
-            transform.Translate(Vector3.back * speed * Time.deltaTime);
+            moveDirection += Vector3.back;
         }
-
         if(Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
-            transform.Translate(Vector3.right * speed * Time.deltaTime);
+            moveDirection += Vector3.right;
         }
-        else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+        if(Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
-            transform.Translate(Vector3.left * speed * Time.deltaTime);
+            moveDirection += Vector3.left;
         }
 
         if(Input.GetKeyDown(KeyCode.Space))
         {
             playerRb.AddForce(0, jumpForce, 0, ForceMode.Impulse);
         }
+
+        transform.Translate(moveDirection * speed * Time.deltaTime);
     }
 }
