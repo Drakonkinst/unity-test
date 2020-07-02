@@ -9,15 +9,19 @@ public class CameraController : MonoBehaviour
     public float height = 3.0f;
     
     GameObject playerCharacter;
+    private Transform myTransform;
+    
     // Start is called before the first frame update
     void Start()
     {
         playerCharacter = GameObject.FindWithTag("Player");
+        myTransform = transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        this.transform.position = (playerCharacter.transform.position + new Vector3(0, height, -distance));
+        myTransform.position = (playerCharacter.transform.position + new Vector3(0, height, -distance));
+        myTransform.LookAt(playerCharacter.transform);
     }
 }
