@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public float speed = 1;
+
     Rigidbody playerRb;
     
     // Start is called before the first frame update
@@ -19,22 +21,22 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.UpArrow))
+        if(Input.GetKey(KeyCode.UpArrow))
         {
-            transform.Translate(Vector3.forward * Time.deltaTime);
+            transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
-        else if(Input.GetKeyDown(KeyCode.DownArrow))
+        else if(Input.GetKey(KeyCode.DownArrow))
         {
-            transform.Translate(Vector3.back * Time.deltaTime);
+            transform.Translate(Vector3.back * speed * Time.deltaTime);
         }
 
-        if(Input.GetKeyDown(KeyCode.RightArrow))
+        if(Input.GetKey(KeyCode.RightArrow))
         {
-            transform.Translate(Vector3.right * Time.deltaTime);
+            transform.Translate(Vector3.right * speed * Time.deltaTime);
         }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        else if (Input.GetKey(KeyCode.LeftArrow))
         {
-            transform.Translate(Vector3.left * Time.deltaTime);
+            transform.Translate(Vector3.left * speed * Time.deltaTime);
         }
 
         if(Input.GetKeyDown(KeyCode.Space))
