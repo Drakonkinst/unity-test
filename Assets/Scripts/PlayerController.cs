@@ -10,18 +10,24 @@ public class PlayerController : MonoBehaviour
 {
     public float speed = 1;
     public float jumpForce = 20;
+    
+    public float deathZone = 50.0f;
+    public Vector3 respawnLocation = new Vector3(0, 3, 0);
 
-    Rigidbody playerRb;
+    private Rigidbody playerRb;
+    private Transform myTransform;
+    private int deathCount;
     
     // Start is called before the first frame update
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
+        myTransform = transform;
+        
+        deathCount = 0;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    private void DoPlayerInput() {
         Vector3 moveDirection = Vector3.zero;
         
         if(Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
@@ -46,6 +52,20 @@ public class PlayerController : MonoBehaviour
             playerRb.AddForce(0, jumpForce, 0, ForceMode.Impulse);
         }
 
-        transform.Translate(moveDirection * speed * Time.deltaTime);
+        myTransform.Translate(moveDirection * speed * Time.deltaTime);
+    }
+    
+    private void CheckDeath() {
+        if(myTransform.position.y < -deathZone) {
+            deathCount++;
+            myTransform.position = respawnLocation;
+        }
+    }
+    
+    // Update is called once per frame
+    void Update()
+    {
+        CheckDeath();
+        DoPlayerInput();
     }
 }
